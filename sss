@@ -1,0 +1,32 @@
+#!/bin/sh
+######config#####
+lst='
+192.168.2.1          a 公司开发机
+192.168.0.1         b 公司开发机
+root@192.168.56.101 c 虚拟机
+192.168.199.24      4 公司开发机
+root@192.168.199.250 5 公司开发机
+192.168.1.101       w 公司开发机
+'
+#################
+max=`
+echo "$lst" | awk '$1 && $2{
+  if(max < length($1))max=length($1)}END{printf(max)
+}'
+`
+echo "$lst" | awk -v max=$max '$1 && $2{
+  printf("%-*s (%s) %s\n", max, $1, $2, $3)
+}'
+
+read -p 'select> ' -n 1 line
+addr=`
+echo "$lst" | awk -v line=$line '{
+  if($2 == line) printf($1)
+}'
+`
+echo
+if [ -n "$addr" ]; then
+  ssh $addr
+else
+  echo Host Not Found
+fi
