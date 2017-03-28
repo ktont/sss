@@ -10,11 +10,11 @@ root@192.168.199.250 5 公司开发机
 '
 #################
 max=`
-echo "$lst" | awk '$1 && $2{
+echo "$lst" | awk '$1 && length($2){
   if(max < length($1))max=length($1)}END{printf(max)
 }'
 `
-echo "$lst" | awk -v max=$max '$1 && $2{
+echo "$lst" | awk -v max=$max '$1 && length($2){
   printf("%-*s (%s) %s\n", max, $1, $2, $3)
 }'
 
