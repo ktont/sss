@@ -14,9 +14,15 @@ echo "$lst" | awk '$1 && length($2){
   if(max < length($1))max=length($1)}END{printf(max)
 }'
 `
+
+echo '请选择要登陆的服务器：'
+echo '---------------------'
+
 echo "$lst" | awk -v max=$max '$1 && length($2){
   printf("%-*s (%s) %s\n", max, $1, $2, $3)
 }'
+
+echo '---------------------'
 
 read -p 'select> ' -n 1 line
 addr=`
